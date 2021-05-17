@@ -1,0 +1,459 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "TheOffice is a tool to manage employee and department information",
+    "version": "1.0.0",
+    "title": "TheOffice"
+  },
+  "tags": [
+    {
+      "name": "Employee",
+      "description": "The employee, who belongs to a single department"
+    },
+    {
+      "name": "Department",
+      "description": "The department, that can have multiple employees"
+    }
+  ],
+  "paths": {
+    "/api/employees": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Get all employees",
+        "description": "Get a list of all employees",
+        "operationId": "getAllEmployees",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Employee"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Add a new employee",
+        "description": "Add a new employee",
+        "operationId": "insertEmployee",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Request Body",
+            "description": "Employee object that needs to be added to the database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmployeeWithoutDefaultFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response. Returns the employee object that is created",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        }
+      }
+    },
+    "/api/employees/{employeeId}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "employeeId",
+            "type": "integer",
+            "required": true,
+            "description": "Id of the employee to get"
+          }
+        ],
+        "summary": "Get employee by Id",
+        "description": "Get employee by Id",
+        "operationId": "getEmployeeById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Update an existing employee",
+        "description": "Update an existing employee",
+        "operationId": "updateEmployee",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "employeeId",
+            "type": "integer",
+            "required": true,
+            "description": "Id of the employee to update"
+          },
+          {
+            "in": "body",
+            "name": "Request Body",
+            "description": "Employee object with the updated values",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmployeeWithoutDefaultFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response. Returns the employee object that is updated",
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Delete an existing employee",
+        "description": "Delete an existing employee",
+        "operationId": "deleteEmployee",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "employeeId",
+            "type": "integer",
+            "required": true,
+            "description": "Id of the employee to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/employees/search": {
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Search employees based on filtering criteria",
+        "description": "Search employees based on filtering criteria",
+        "operationId": "searchEmployee",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Request Body",
+            "description": "Filter object. At least one criteria is required, all are not mandatory",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmployeeWithoutDefaultFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response. Returns a list of employees matching the filtering criteria",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Employee"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/departments": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Get all departments",
+        "description": "Get a list of all departments",
+        "operationId": "getAllDepartments",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Department"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Add a new department",
+        "description": "Add a new department",
+        "operationId": "insertDepartment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Request Body",
+            "description": "Department object that needs to be added to the database",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DepartmentWithoutDefaultFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response. Returns the department that is created",
+            "schema": {
+              "$ref": "#/definitions/Department"
+            }
+          }
+        }
+      }
+    },
+    "/api/departments/{departmentId}": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "departmentId",
+            "type": "integer",
+            "required": true,
+            "description": "Id of the department"
+          }
+        ],
+        "summary": "Get department by Id",
+        "description": "Get department by Id",
+        "operationId": "getDepartmentById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/Department"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Update an existing department",
+        "description": "Update an existing department",
+        "operationId": "updateDepartment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "departmentId",
+            "type": "integer",
+            "required": true,
+            "description": "Id of the department to update"
+          },
+          {
+            "in": "body",
+            "name": "Request Body",
+            "description": "Department object with the updated values",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DepartmentWithoutDefaultFields"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response. Returns the department object that is updated",
+            "schema": {
+              "$ref": "#/definitions/Department"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Delete an existing department",
+        "description": "Delete an existing department",
+        "operationId": "deleteDepartment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "departmentId",
+            "type": "integer",
+            "required": true,
+            "description": "Id of the department to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Employee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "departmentId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "createdTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modifiedTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "EmployeeWithoutDefaultFields": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "departmentId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Department": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "createdTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modifiedTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "DepartmentWithoutDefaultFields": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
