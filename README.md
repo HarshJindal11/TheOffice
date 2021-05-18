@@ -1,5 +1,9 @@
 # TheOffice
 
+## Demo:
+
+https://user-images.githubusercontent.com/59826194/118643086-bcf75e80-b7f9-11eb-86d4-7fa81af225ae.mp4
+
 To bring up the application setup (Docker) on local:
 
 ```shell
